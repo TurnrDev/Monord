@@ -2,6 +2,6 @@ discord.py>=1.0.0,<1.5.0
 elasticsearch_dsl<7.0.0,!=6.2.0
 GeoAlchemy2>=0.6.1,<0.7.0
 pytz
-Shapely>=1.6.4,<1.7.0
+Shapely>=1.6.4,<1.8.0
 psycopg2
 alembic>=1.0.9,<1.1.0
