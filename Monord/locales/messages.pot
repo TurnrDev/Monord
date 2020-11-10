@@ -1,0 +1,647 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2020-11-10 17:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: redgettext 3.3\n"
+
+#: Monord/config.py:27
+msgid "Must be yes or no"
+msgstr ""
+
+#: Monord/config.py:32
+msgid "You can only set this setting per-channel"
+msgstr ""
+
+#: Monord/config.py:38
+msgid "Must be a valid time zone"
+msgstr ""
+
+#: Monord/config.py:48
+msgid "Invalid JSON provided"
+msgstr ""
+
+#: Monord/config.py:64
+msgid "Value must be a number"
+msgstr ""
+
+#: Monord/config.py:71
+msgid "Mirror raids within this channel (or servers) geopoints, yes or no"
+msgstr ""
+
+#: Monord/config.py:76
+msgid ""
+"Set the server (or channels) time zone. See "
+"https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for a list of "
+"time zones"
+msgstr ""
+
+#: Monord/config.py:88
+msgid "Mention subscription roles in this channel"
+msgstr ""
+
+#: Monord/config.py:93
+msgid "Delete raids this many minutes after despawn"
+msgstr ""
+
+#: Monord/config.py:98
+msgid "The emoji used for the going button reaction"
+msgstr ""
+
+#: Monord/config.py:103 Monord/config.py:108
+msgid "The emoji used for the add person button reaction"
+msgstr ""
+
+#: Monord/config.py:113
+msgid "The emoji used for the add time button reaction"
+msgstr ""
+
+#: Monord/config.py:118
+msgid "The emoji used for the remove time button reaction"
+msgstr ""
+
+#: Monord/config.py:128
+msgid "Settings"
+msgstr ""
+
+#: Monord/converters.py:36
+msgid "Gym with id {} not found"
+msgstr ""
+
+#: Monord/converters.py:57
+msgid "This guild/channel does not have a region set"
+msgstr ""
+
+#: Monord/converters.py:68 Monord/converters.py:84
+msgid "Gym \"{}\" not found"
+msgstr ""
+
+#: Monord/converters.py:74
+msgid "Error in Gym converter. Check your console or logs for details"
+msgstr ""
+
+#: Monord/converters.py:91
+msgid "Error in GymWithSQL converter. Check your console or logs for details"
+msgstr ""
+
+#: Monord/converters.py:153
+msgid "\"{}\" is not a known time format"
+msgstr ""
+
+#: Monord/converters.py:159
+msgid "Error in Time converter. Check your console or logs for details"
+msgstr ""
+
+#: Monord/converters.py:169
+msgid "{} is not a valid egg level, must be between 1 and 5"
+msgstr ""
+
+#: Monord/converters.py:175 Monord/converters.py:193
+msgid "Pokemon \"{}\" not found"
+msgstr ""
+
+#: Monord/converters.py:181
+msgid "Error in Pokemon converter. Check your console or logs for details"
+msgstr ""
+
+#: Monord/converters.py:200
+msgid ""
+"Error in PokemonWithSQL converter. Check your console or logs for details"
+msgstr ""
+
+#: Monord/converters.py:212
+msgid "Raid with ID \"{}\" not found"
+msgstr ""
+
+#: Monord/converters.py:217
+msgid "There is no raid on \"{}\"."
+msgstr ""
+
+#: Monord/converters.py:223
+msgid "Error in Raid converter. Check your console or logs for details"
+msgstr ""
+
+#: Monord/converters.py:232
+msgid "Not enough arguments"
+msgstr ""
+
+#: Monord/converters.py:250
+msgid "`{}` is not a member"
+msgstr ""
+
+#: Monord/converters.py:257
+msgid ""
+"Error in MembersWithExtra converter. Check your console or logs for details"
+msgstr ""
+
+#: Monord/main.py:55
+#, docstring
+msgid ""
+"\n"
+"        Add, find and remove gyms\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:62
+#, docstring
+msgid ""
+"\n"
+"        Find a gym, and show its location\n"
+"\n"
+"        <gym> - The title or ID of the gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:73
+#, docstring
+msgid ""
+"\n"
+"        Add a gym to the database\n"
+"\n"
+"        <latitude> - Latitude of the gym\n"
+"        <longitude> - Longitude of the gym\n"
+"        <ex> - Is the gym an EX location (yes/no)\n"
+"        <title> - The title of the gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:87
+#, docstring
+msgid ""
+"\n"
+"        Manage aliases on gyms\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:95
+#, docstring
+msgid ""
+"\n"
+"        Add an alias for a gym\n"
+"\n"
+"        <title> - The new alias to add\n"
+"        <gym> - The current title or ID of the gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:109
+msgid "Alias already exists"
+msgstr ""
+
+#: Monord/main.py:115
+msgid "Alias \"{}\" added for {}"
+msgstr ""
+
+#: Monord/main.py:119
+#, docstring
+msgid ""
+"\n"
+"        List aliases for a gym\n"
+"\n"
+"        <gym> - The title of the gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:130
+msgid "{} has no aliases"
+msgstr ""
+
+#: Monord/main.py:135
+msgid "{} has the following aliases: {}"
+msgstr ""
+
+#: Monord/main.py:141
+#, docstring
+msgid ""
+"\n"
+"        Remove an alias from a gym\n"
+"\n"
+"        <title> - The new alias to add\n"
+"        <gym> - The current title or ID of the gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:155
+msgid "Alias \"{}\" on {} does not exist"
+msgstr ""
+
+#: Monord/main.py:158
+msgid "Alias \"{}\" on {} removed"
+msgstr ""
+
+#: Monord/main.py:163
+#, docstring
+msgid ""
+"\n"
+"        Remove a gym from the database\n"
+"\n"
+"        <gym> - The title or ID of the gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:171
+msgid "Gym removed"
+msgstr ""
+
+#: Monord/main.py:175
+#, docstring
+msgid ""
+"\n"
+"        Change details on a gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:205
+#, docstring
+msgid ""
+"\n"
+"        Report raids\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:219
+#, docstring
+msgid ""
+"\n"
+"        Report a raid\n"
+"\n"
+"        <time> Can be minutes left on the timer, or a HH:MM time\n"
+"        <pokemon> Either the name of the pokemon, or the eggs level\n"
+"        <gym> The title of the gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:258
+msgid "That raid has already been reported"
+msgstr ""
+
+#: Monord/main.py:268
+#, docstring
+msgid ""
+"\n"
+"        Report an EX raid\n"
+"\n"
+"        <time> Start time of the EX raid in YYYY-MM-DD.HH:MM format\n"
+"        <gym> The title of the gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:280
+msgid "That raid has already been reported (#{})"
+msgstr ""
+
+#: Monord/main.py:289
+#, docstring
+msgid ""
+"\n"
+"        Hide a raid from a channel\n"
+"\n"
+"        <channel> Channel to hide the raid from.\n"
+"        <raid> Either the title of a gym, or a raid ID.\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:300
+#, docstring
+msgid ""
+"\n"
+"        Show a raid in a channel\n"
+"\n"
+"        <channel> Channel to hide the raid from.\n"
+"        <raid> Either the title of a gym, or a raid ID.\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:310
+#, docstring
+msgid ""
+"\n"
+"        Correct a raids gym\n"
+"\n"
+"        <channel> Channel to hide the raid from.\n"
+"        <gym> Either the title of a gym, or a raid ID.\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:325
+#, docstring
+msgid ""
+"\n"
+"        Add or remove people as going to a raid\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:334
+#, docstring
+msgid ""
+"\n"
+"        Add people as going to a raid\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:343
+#, docstring
+msgid ""
+"\n"
+"        Remove people from going to a raid\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:352
+#, docstring
+msgid ""
+"\n"
+"        Set the start time of a raid\n"
+"\n"
+"        <time> - Can be minutes (in the future), or a HH:MM time\n"
+"        <raid> Either the title of a gym, or a raid ID\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:360
+msgid "You can't set the start time to after the raid despawns"
+msgstr ""
+
+#: Monord/main.py:363
+msgid "You can't set the start time to before the raid starts"
+msgstr ""
+
+#: Monord/main.py:372
+#, docstring
+msgid ""
+"\n"
+"        Set the despawn time of a raid\n"
+"\n"
+"        <time> - Can be minutes (in the future), or a HH:MM time\n"
+"        <raid> Either the title of a gym, or a raid ID\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:412
+#, docstring
+msgid ""
+"\n"
+"        Set the pokemon on a raid.\n"
+"\n"
+"        <pokemon> - The name of the pokemon\n"
+"        <raid> Either the title of a gym, or a raid ID\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:434
+#, docstring
+msgid ""
+"\n"
+"        Change configuration settings\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:448
+msgid "This command is not available in DMs."
+msgstr ""
+
+#: Monord/main.py:457
+msgid "{} is set to {}"
+msgstr ""
+
+#: Monord/main.py:460 Monord/main.py:473
+msgid "{} is not a valid setting"
+msgstr ""
+
+#: Monord/main.py:468
+msgid "Setting {} to \"{}\" on {}"
+msgstr ""
+
+#: Monord/main.py:471
+msgid "Setting {} to \"{}\""
+msgstr ""
+
+#: Monord/main.py:482
+#, docstring
+msgid ""
+"\n"
+"        Sets config setting for a channel\n"
+"\n"
+"        <channel> a discord channel\n"
+"        <key> the key to set, or nothing to see a list of keys\n"
+"        <value> the value to set, or nothing to see the value of <key>\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:496
+#, docstring
+msgid ""
+"\n"
+"        Sets config setting for this guild\n"
+"\n"
+"        <key> the key to set, or nothing to see a list of keys\n"
+"        <value> the value to set, or nothing to see the value of <key>\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:506
+#, docstring
+msgid ""
+"\n"
+"        Subscribe to notifications\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:513
+#, docstring
+msgid ""
+"\n"
+"        Subscribe to notifications for a pokemon\n"
+"\n"
+"        <pokemon> the name of the pokemon\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:522
+#, docstring
+msgid ""
+"\n"
+"        Subscribe to notifications for raids on EX Eligible gyms\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:525 Monord/main.py:555 Monord/utils.py:304
+msgid "EX Eligible"
+msgstr ""
+
+#: Monord/main.py:529
+#, docstring
+msgid ""
+"\n"
+"        Subscribe to notifications for raids on a gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:536
+#, docstring
+msgid ""
+"\n"
+"        Unsubscribe from notifications\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:543
+#, docstring
+msgid ""
+"\n"
+"        Unsubscribe from notifications for a pokemon\n"
+"\n"
+"        <pokemon> the name of the pokemon\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:552
+#, docstring
+msgid ""
+"\n"
+"        Unsubscribe from notifications for raids on EX Eligible gyms\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:559
+#, docstring
+msgid ""
+"\n"
+"        Unsubscribe from notifications for raids on a gym\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:566
+#, docstring
+msgid ""
+"\n"
+"        Manage your party, members of your party will be automatically added to raids when you sign up\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:635
+msgid "You are in a party with: {}"
+msgstr ""
+
+#: Monord/main.py:640
+#, docstring
+msgid ""
+"\n"
+"        Load pokemon and gyms from json file\n"
+"        "
+msgstr ""
+
+#: Monord/main.py:644
+msgid "{} File not found"
+msgstr ""
+
+#: Monord/utils.py:72
+msgid "This gym is EX Eligible"
+msgstr ""
+
+#: Monord/utils.py:74
+msgid "This gym is not EX Eligible"
+msgstr ""
+
+#: Monord/utils.py:210
+msgid "**Level**: {}"
+msgstr ""
+
+#: Monord/utils.py:230
+msgid "**Pokemon**: {} (Level {})"
+msgstr ""
+
+#: Monord/utils.py:233
+msgid "**Pokemon**: {}"
+msgstr ""
+
+#: Monord/utils.py:236
+msgid "**Start Time**: {}"
+msgstr ""
+
+#: Monord/utils.py:240
+msgid "**Hatches at**: {}"
+msgstr ""
+
+#: Monord/utils.py:246
+msgid "**Despawns at**: {}"
+msgstr ""
+
+#: Monord/utils.py:252
+msgid "**Perfect CP**: {} / {}"
+msgstr ""
+
+#: Monord/utils.py:260
+msgid "**Weak against**: {}"
+msgstr ""
+
+#: Monord/utils.py:263
+msgid "**Interested ({})**"
+msgstr ""
+
+#: Monord/utils.py:265
+msgid "**Going ({})**"
+msgstr ""
+
+#: Monord/utils.py:270
+msgid "This raid has the possibility of giving you an EX raid pass"
+msgstr ""
+
+#: Monord/utils.py:271
+msgid "Press the {} below if you want to do this raid"
+msgstr ""
+
+#: Monord/utils.py:286
+msgid "Raid ID {}. Ignore emoji counts, they are inaccurate."
+msgstr ""
+
+#: Monord/utils.py:297
+msgid "Level {} egg"
+msgstr ""
+
+#: Monord/utils.py:518 Monord/utils.py:604 Monord/utils.py:636
+#: Monord/utils.py:653 Monord/utils.py:751
+msgid "Raid {} (#{})"
+msgstr ""
+
+#: Monord/utils.py:524
+msgid "This raid has hatched, can you see what it is?"
+msgstr ""
+
+#: Monord/utils.py:609
+msgid "{} is a {}"
+msgstr ""
+
+#: Monord/utils.py:701
+msgid "Added by Monord"
+msgstr ""
+
+#: Monord/utils.py:708
+msgid "You are now subscribed to {}"
+msgstr ""
+
+#: Monord/utils.py:710
+msgid "You are already subscribed to {}"
+msgstr ""
+
+#: Monord/utils.py:719 Monord/utils.py:753
+msgid "Removed by Monord"
+msgstr ""
+
+#: Monord/utils.py:721
+msgid "Removed by Monord, role is empty"
+msgstr ""
+
+#: Monord/utils.py:729
+msgid "You have been unsubscribed from {}"
+msgstr ""
+
+#: Monord/utils.py:731
+msgid "You are not subscribed to {}"
+msgstr ""
