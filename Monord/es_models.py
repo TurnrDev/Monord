@@ -2,40 +2,44 @@ from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl import DocType, Text, Keyword, GeoPoint, Boolean, Integer
 from os import environ
 
-connections.create_connection(hosts=[environ.get('ELASTICSEARCH_HOST') or 'localhost'])
+connections.create_connection(hosts=[environ.get("ELASTICSEARCH_HOST") or "localhost"])
+
 
 class Gym(DocType):
-    name = Text(analyzer='snowball', fields={'raw': Keyword()})
+    name = Text(analyzer="snowball", fields={"raw": Keyword()})
     location = GeoPoint()
 
     class Meta:
-        index = 'gym'
+        index = "gym"
 
     class Index:
-        name = 'gym'
+        name = "gym"
+
 
 Gym.init()
 
 
 class Pokemon(DocType):
-    name = Text(analyzer='snowball', fields={'raw': Keyword()})
+    name = Text(analyzer="snowball", fields={"raw": Keyword()})
 
     class Meta:
-        index = 'pokemon'
+        index = "pokemon"
 
     class Index:
-        name = 'pokemon'
+        name = "pokemon"
+
 
 Pokemon.init()
 
 
 class Pokestop(DocType):
-    name = Text(analyzer='snowball', fields={'raw': Keyword()})
+    name = Text(analyzer="snowball", fields={"raw": Keyword()})
 
     class Meta:
-        index = 'pokestop'
+        index = "pokestop"
 
     class Index:
-        name = 'pokestop'
+        name = "pokestop"
+
 
 Pokestop.init()

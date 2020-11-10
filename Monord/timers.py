@@ -6,12 +6,13 @@ from sqlalchemy import or_
 from . import models
 from . import utils
 import discord
+
 logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
 
 ch = logging.StreamHandler(sys.stdout)
 ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -20,21 +21,25 @@ async def raid_timers(cog):
     while True:
         try:
             # Find the soonest raid that hasn't hatched or despawned.
-            raids = cog.session.query(models.Raid).filter(
-                or_(
-                    models.Raid.despawned == False,
-                    models.Raid.hatched == False
-                )
-            ).order_by('despawn_time')
+            raids = (
+                cog.session.query(models.Raid)
+                .filter(or_(models.Raid.despawned == False, models.Raid.hatched == False))
+                .order_by("despawn_time")
+            )
 
             # If there are no raids found, stop the loop.
             if raids.count() == 0:
                 return
 
-            soonest_hatch = raids.filter_by(hatched=False).order_by('despawn_time').first()
+            soonest_hatch = raids.filter_by(hatched=False).order_by("despawn_time").first()
             soonest_despawn = raids.first()
             if soonest_hatch is not None:
-                raid = soonest_hatch if soonest_hatch.despawn_time - utils.DESPAWN_TIME < soonest_despawn.despawn_time else soonest_despawn
+                raid = (
+                    soonest_hatch
+                    if soonest_hatch.despawn_time - utils.DESPAWN_TIME
+                    < soonest_despawn.despawn_time
+                    else soonest_despawn
+                )
             else:
                 raid = soonest_despawn
 
@@ -64,11 +69,17 @@ async def raid_timers(cog):
             logger.exception("Error in raid_timers")
             await asyncio.sleep(5)
 
+
 async def embed_timers(cog):
     while True:
         try:
             # Find the embed that needs deleting.
-            embed = cog.session.query(models.Embed).filter(models.Embed.delete_at != None).order_by('delete_at').first()
+            embed = (
+                cog.session.query(models.Embed)
+                .filter(models.Embed.delete_at != None)
+                .order_by("delete_at")
+                .first()
+            )
             # If there are no raids found, stop the loop.
             if embed is None:
                 return
@@ -94,15 +105,16 @@ async def embed_timers(cog):
             logger.exception("Error in embed_timers")
             await asyncio.sleep(5)
 
+
 def raid_reschedule(cog):
     if cog.raid_timers_task is None or cog.raid_timers_task.done():
         cog.raid_timers_task = cog.bot.loop.create_task(raid_timers(cog))
     else:
         cog.raid_time_stale = True
 
+
 def embed_reschedule(cog):
     if cog.embed_timers_task is None or cog.embed_timers_task.done():
         cog.embed_timers_task = cog.bot.loop.create_task(embed_timers(cog))
     else:
         cog.embed_time_stale = True
-    

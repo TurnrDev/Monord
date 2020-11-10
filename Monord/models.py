@@ -10,7 +10,7 @@ from sqlalchemy import (
     Integer,
     BigInteger,
     String,
-    UniqueConstraint
+    UniqueConstraint,
 )
 
 
@@ -18,15 +18,15 @@ Base = declarative_base()
 
 
 class Gym(Base):
-    __tablename__ = 'gym'
+    __tablename__ = "gym"
     id = Column(String, primary_key=True)
     title = Column(String)
-    location = Column(Geometry(geometry_type='POINT', srid=4326))
+    location = Column(Geometry(geometry_type="POINT", srid=4326))
     ex = Column(Boolean, default=False)
 
 
 class GymAlias(Base):
-    __tablename__ = 'gymalias'
+    __tablename__ = "gymalias"
     id = Column(Integer, primary_key=True)
     title = Column(String)
     gym_id = Column(String, ForeignKey("gym.id"))
@@ -35,7 +35,7 @@ class GymAlias(Base):
 
 
 class Pokestop(Base):
-    __tablename__ = 'pokestop'
+    __tablename__ = "pokestop"
     id = Column(Integer, primary_key=True)
     title = Column(String)
     latitude = Column(Float)
@@ -43,7 +43,7 @@ class Pokestop(Base):
 
 
 class Pokemon(Base):
-    __tablename__ = 'pokemon'
+    __tablename__ = "pokemon"
     id = Column(Integer, primary_key=True)
     pokedex_id = Column(Integer)
     form = Column(Integer)
@@ -58,7 +58,7 @@ class Pokemon(Base):
 
 
 class Raid(Base):
-    __tablename__ = 'raid'
+    __tablename__ = "raid"
     id = Column(Integer, primary_key=True)
     pokemon_id = Column(Integer, ForeignKey("pokemon.id"), nullable=True)
     pokemon = relationship(Pokemon, foreign_keys=[pokemon_id])
@@ -74,7 +74,7 @@ class Raid(Base):
 
 
 class Event(Base):
-    __tablename__ = 'event'
+    __tablename__ = "event"
     id = Column(Integer, primary_key=True)
     name = Column(String)
     latitude = Column(Float)
@@ -86,7 +86,7 @@ class Event(Base):
 
 
 class Embed(Base):
-    __tablename__ = 'embed'
+    __tablename__ = "embed"
     id = Column(Integer, primary_key=True)
     channel_id = Column(BigInteger)
     message_id = Column(BigInteger)
@@ -100,6 +100,7 @@ class Going(object):
     @declared_attr
     def __tablename__(cls):
         return cls.__name__.lower()
+
     id = Column(Integer, primary_key=True)
     user_id = Column(BigInteger)
     guild_id = Column(BigInteger)
@@ -109,7 +110,7 @@ class Going(object):
 class RaidGoing(Going, Base):
     raid_id = Column(Integer, ForeignKey("raid.id"))
     raid = relationship(Raid, foreign_keys=[raid_id])
-    __table_args__ = (UniqueConstraint('raid_id', 'user_id', name='_raid_id_user_uc'),)
+    __table_args__ = (UniqueConstraint("raid_id", "user_id", name="_raid_id_user_uc"),)
 
 
 class EventGoing(Going, Base):
@@ -118,22 +119,24 @@ class EventGoing(Going, Base):
 
 
 class Party(Base):
-    __tablename__ = 'party'
+    __tablename__ = "party"
     id = Column(Integer, primary_key=True)
     creator_user_id = Column(BigInteger)
     user_id = Column(BigInteger)
     guild_id = Column(BigInteger)
     extra = Column(Integer, default=0)
-    __table_args__ = (UniqueConstraint('creator_user_id', 'user_id', name='_creator_user_id_user_id_uc'),)
+    __table_args__ = (
+        UniqueConstraint("creator_user_id", "user_id", name="_creator_user_id_user_id_uc"),
+    )
 
 
 class GuildConfig(Base):
-    __tablename__ = 'guildconfig'
+    __tablename__ = "guildconfig"
     id = Column(Integer, primary_key=True)
     guild_id = Column(BigInteger)
     channel_id = Column(BigInteger)
     mirror = Column(Boolean, nullable=True, default=None)
-    region = Column(Geometry('POLYGON', srid=4326), nullable=True, default=None)
+    region = Column(Geometry("POLYGON", srid=4326), nullable=True, default=None)
     timezone = Column(String, nullable=True, default=None)
     subscriptions = Column(Boolean, nullable=True, default=None)
     delete_after_despawn = Column(Integer, nullable=True, default=None)
@@ -144,20 +147,19 @@ class GuildConfig(Base):
     emoji_remove_time = Column(String, nullable=True, default=None)
 
 
-"""class GuildConfig(Base):
-    __tablename__ = 'guildconfig'
-    id = Column(Integer, primary_key=True)
-    guild_id = Column(BigInteger)
-    channel_id = Column(BigInteger)
-    mirror = Column(Boolean, default=False)
-    region = Column(Geometry('POLYGON', srid=4326), nullable=True, default=None)
-    timezone = Column(String, default="Europe/London")
-    subscriptions = Column(Boolean, default=False)
-    delete_after_despawn = Column(Integer, default=-1)
-    emoji_going = Column(String, default="\U0001F44D")
-    emoji_add_person = Column(String, default="\U00002B06")
-    emoji_remove_person = Column(String, default="\U00002B07")
-    emoji_add_time = Column(String, default="\U000023E9")
-    emoji_remove_time = Column(String, default="\U000023EA")
-    #__table_args__ = (UniqueConstraint('guild_id', 'key', name='_guild_id_key_uc'),)
-"""
+# class GuildConfig(Base):
+#     __tablename__ = "guildconfig"
+#     id = Column(Integer, primary_key=True)
+#     guild_id = Column(BigInteger)
+#     channel_id = Column(BigInteger)
+#     mirror = Column(Boolean, default=False)
+#     region = Column(Geometry("POLYGON", srid=4326), nullable=True, default=None)
+#     timezone = Column(String, default="Europe/London")
+#     subscriptions = Column(Boolean, default=False)
+#     delete_after_despawn = Column(Integer, default=-1)
+#     emoji_going = Column(String, default="\U0001F44D")
+#     emoji_add_person = Column(String, default="\U00002B06")
+#     emoji_remove_person = Column(String, default="\U00002B07")
+#     emoji_add_time = Column(String, default="\U000023E9")
+#     emoji_remove_time = Column(String, default="\U000023EA")
+#     __table_args__ = (UniqueConstraint('guild_id', 'key', name='_guild_id_key_uc'),)

@@ -8,4 +8,3 @@ echo "Updating/creating DB schema"
 alembic upgrade head
 echo "Starting Monord"
 python -u run.py
-
