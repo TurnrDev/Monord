@@ -31,6 +31,7 @@ class Monord(commands.Cog):
     """
 
     def __init__(self, bot):
+        print("Monord: Init cog.")
         self.bot = bot
         engine = create_engine(
             environ.get("POSTGRES_CS"), connect_args={"options": "-c timezone=utc"}

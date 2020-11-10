@@ -15,6 +15,11 @@ class Bot(commands.Bot):
             traceback.print_tb(error.__traceback__)
 
 
+print("Creating Bot instance...")
 bot = Bot(command_prefix="!", description="Monord")
+print("Bot instance created.")
+print("Creating Cog instance...")
 bot.add_cog(Monord(bot))
+print("Cog created and mounted...")
+print("Running bot...")
 bot.run(environ["DISCORD_TOKEN"], bot=True, reconnect=True)
