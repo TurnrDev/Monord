@@ -26,7 +26,6 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 RE_MINUTESAFTER = re.compile(r"^(\d+)@(.+)$")
-RE_DISCORD_MENTION = re.compile(r"\<@(?:\!|)(\d+)\>")
 
 
 def get_es_gym_by_id(ctx, argument):
@@ -239,22 +238,22 @@ class MembersWithExtra(commands.Converter):
                 if skip_next:
                     skip_next = False
                     continue
-                match = RE_DISCORD_MENTION.match(args[i])
-                if match:
-                    member = ctx.message.channel.guild.get_member(int(match.group(1)))
-                    extra = 0
+                try:
+                    member = commands.MemberConverter.convert(ctx, args[i])
                     if i + 1 < len(args) and args[i + 1].isnumeric():
                         extra = int(args[i + 1])
                         skip_next = True
+                    else:
+                        extra = 0
                     members.append((member, extra))
-                else:
-                    raise commands.CommandError(_('"{}" is not a member').format(argument))
+                except (commands.CommandError, commands.BadArgument):
+                    raise commands.BadArgument(_("`{}` is not a member").format(argument))
             return members
         except (commands.CommandError, commands.BadArgument):
             raise
-        except Exception:
+        except Exception as e:
             logger.exception("Exception in MembersWithExtra")
             await ctx.send(
-                _("Error in MembersWithExtrar converter. Check your console or logs for details")
+                _("Error in MembersWithExtra converter. Check your console or logs for details")
             )
-            raise
+            raise commands.CommandError(e)
