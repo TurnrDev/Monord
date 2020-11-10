@@ -3,7 +3,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy import and_, or_
 import pytz
 import discord
-from shapely.geometry import shape, Polygon
+from shapely.geometry import shape
 from geoalchemy2.shape import from_shape
 import json
 import gettext
@@ -61,7 +61,7 @@ def integer_validator(value, is_channel):
     try:
         value = int(value)
     except ValueError:
-        raise ValidationiError(_("Value must be a number"))
+        raise ValidationError(_("Value must be a number"))
     return value
 
 
@@ -139,13 +139,13 @@ def get(session, keys, channel, allow_fallback=True, server_only=False, return_d
                 models.GuildConfig.channel_id == channel.id,
                 and_(
                     models.GuildConfig.guild_id == channel.guild.id,
-                    models.GuildConfig.channel_id == None,
+                    models.GuildConfig.channel_id is None,
                 ),
             )
         )
     elif server_only:
         cfg = session.query(models.GuildConfig).filter(
-            models.GuildConfig.guild_id == channel.guild.id, models.GuildConfig.channel_id == None
+            models.GuildConfig.guild_id == channel.guild.id, models.GuildConfig.channel_id is None
         )
     else:
         cfg = session.query(models.GuildConfig).filter(models.GuildConfig.channel_id == channel.id)

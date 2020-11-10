@@ -1,5 +1,5 @@
 from elasticsearch_dsl.connections import connections
-from elasticsearch_dsl import DocType, Text, Keyword, GeoPoint, Boolean, Integer
+from elasticsearch_dsl import DocType, Text, Keyword, GeoPoint
 from os import environ
 
 connections.create_connection(hosts=[environ.get("ELASTICSEARCH_HOST") or "localhost"])

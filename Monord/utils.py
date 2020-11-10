@@ -16,8 +16,11 @@ import json
 import gettext
 import re
 import random
+from typing import List
+from collections import OrderedDict
+from urllib.parse import urlencode
 
-RE_EMOJI = re.compile("\<\:(.+):(\d+)>")
+RE_EMOJI = re.compile(r"\<\:(.+):(\d+)>")
 
 _ = gettext.gettext
 
@@ -26,6 +29,40 @@ DESPAWN_TIME = datetime.timedelta(minutes=45)
 
 EMBED_RAID = 1
 EMBED_HATCH = 2
+
+
+def get_map_img(
+    access_token: str,
+    username: str,
+    style_id: id,
+    overlay: List[str],
+    lon: float,
+    lat: float,
+    zoom: int,
+    width: int,
+    height: int,
+    bearing: float = 0,
+    pitch: float = 0,
+    high_density: bool = True,
+    attribution: bool = True,
+    logo: bool = False,
+) -> str:
+    base_url = "https://api.mapbox.com/styles/v1/{username}/{style_id}/static/{overlay}/{lon},{lat},{zoom},{bearing},{pitch}/{width}x{height}{high_density}"
+    params = OrderedDict(access_token=access_token)
+    url = base_url.format(
+        username=username,
+        style_id=style_id,
+        overlay=",".join(overlay),
+        lon=lon,
+        lat=lat,
+        zoom=zoom,
+        bearinhg=bearing,
+        pitch=pitch,
+        width=width,
+        height=height,
+        high_density="@2x" if high_density is True else "",
+    )
+    return "{url}?{params}".format(url=url, params=urlencode(params))
 
 
 def prepare_gym_embed(gym):
@@ -43,11 +80,21 @@ def prepare_gym_embed(gym):
         description=description,
     )
     embed.set_image(
-        url="https://api.mapbox.com/styles/v1/{3}/static/pin-s+97F0F9({1},{0})/{1},{0},14,0,0/250x125@2x?access_token={2}".format(
-            es_gym.location["lat"],
-            es_gym.location["lon"],
-            "pk.eyJ1IjoiamF5dHVybnIiLCJhIjoiY2pxaTM0YjN6MGdvcjQ4bm0za25ucGpmbCJ9.qJmqwYw24tq_5WaKlOCzVg",
-            "jayturnr/cjqi34t5walqo2rmwu032ra0a",
+        url=get_map_img(
+            access_token="pk.eyJ1IjoiamF5dHVybnIiLCJhIjoiY2pxaTM0YjN6MGdvcjQ4bm0za25ucGpmbCJ9.qJmqwYw24tq_5WaKlOCzVg",
+            username="jayturnr",
+            style_id="cjqi34t5walqo2rmwu032ra0a",
+            overlay=[
+                "pin-s+97F0F9({1},{0})".format(es_gym.location["lat"], es_gym.location["lon"])
+            ],
+            lon=es_gym.location["lon"],
+            lat=es_gym.location["lat"],
+            zoom=14,
+            bearing=0,
+            pitch=0,
+            width=250,
+            height=125,
+            high_density=True,
         )
     )
     embed.set_footer(text="Gym ID {}.".format(es_gym.meta["id"]))
@@ -78,7 +125,7 @@ def get_raid_at_time(session, gym, time):
     raid = (
         session.query(models.Raid)
         .filter(
-            models.Raid.despawned == False,
+            models.Raid.despawned is False,
             models.Raid.gym == gym,
             models.Raid.despawn_time >= spawn_time,
             models.Raid.despawn_time <= time + HATCH_TIME + DESPAWN_TIME,
@@ -316,7 +363,7 @@ async def send_raid(cog, channel, raid, extra_content=None):
             pass
 
     formatted_raid = format_raid(cog, channel, raid)
-    if extra_content != None:
+    if extra_content is not None:
         if formatted_raid["content"] is not None:
             formatted_raid["content"] = extra_content + "\n" + formatted_raid["content"]
         else:
@@ -394,20 +441,20 @@ async def create_raid(cog, time, pokemon, gym, ex, triggered_by=None, triggered_
         tasks.append(send_raid(cog, triggered_channel, raid))
 
     guilds = cog.session.query(models.GuildConfig).filter(
-        models.GuildConfig.channel_id == None,
-        models.GuildConfig.region != None,
+        models.GuildConfig.channel_id is None,
+        models.GuildConfig.region is not None,
         func.ST_Contains(models.GuildConfig.region, gym.location),
     )
     channels = cog.session.query(models.GuildConfig).filter(
         or_(
             and_(
                 models.GuildConfig.guild_id.in_([guild.guild_id for guild in guilds]),
-                models.GuildConfig.mirror == True,
-                models.GuildConfig.region == None,
+                models.GuildConfig.mirror is True,
+                models.GuildConfig.region is None,
             ),
             and_(
-                models.GuildConfig.channel_id != None,
-                models.GuildConfig.mirror == True,
+                models.GuildConfig.channel_id is not None,
+                models.GuildConfig.mirror is True,
                 func.ST_Contains(models.GuildConfig.region, gym.location),
             ),
         )
@@ -417,7 +464,7 @@ async def create_raid(cog, time, pokemon, gym, ex, triggered_by=None, triggered_
         channel = cog.bot.get_channel(cfg.channel_id)
         if channel == triggered_channel:
             continue  # Don't broadcast twice in the same channel
-        if channel == None:
+        if channel is None:
             continue  # Channel is missing, don't broadcast to it.
         tasks.append(send_raid(cog, channel, raid))
 
@@ -516,20 +563,20 @@ async def send_hatch(cog, channel, raid):
 
 def get_subscription_channels(cog, raid):
     guilds = cog.session.query(models.GuildConfig).filter(
-        models.GuildConfig.channel_id == None,
-        models.GuildConfig.region != None,
+        models.GuildConfig.channel_id is None,
+        models.GuildConfig.region is not None,
         func.ST_Contains(models.GuildConfig.region, raid.gym.location),
     )
     channels = cog.session.query(models.GuildConfig).filter(
         or_(
             and_(
                 models.GuildConfig.guild_id.in_([guild.guild_id for guild in guilds]),
-                models.GuildConfig.subscriptions == True,
-                models.GuildConfig.region == None,
+                models.GuildConfig.subscriptions is True,
+                models.GuildConfig.region is None,
             ),
             and_(
-                models.GuildConfig.channel_id != None,
-                models.GuildConfig.subscriptions == True,
+                models.GuildConfig.channel_id is not None,
+                models.GuildConfig.subscriptions is True,
                 func.ST_Contains(models.GuildConfig.region, raid.gym.location),
             ),
         )
@@ -623,6 +670,7 @@ async def toggle_going(cog, triggered_by, raid, members):
     members_to_remove = []
     for member in members:
         try:
+            # TODO: Replace this with a query which checks existance without pulling the data to not be used
             going = (
                 cog.session.query(models.RaidGoing).filter_by(raid=raid, user_id=member.id).one()
             )

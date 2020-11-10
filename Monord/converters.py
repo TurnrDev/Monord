@@ -25,8 +25,8 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-RE_MINUTESAFTER = re.compile("^(\d+)@(.+)$")
-RE_DISCORD_MENTION = re.compile("\<@(?:\!|)(\d+)\>")
+RE_MINUTESAFTER = re.compile(r"^(\d+)@(.+)$")
+RE_DISCORD_MENTION = re.compile(r"\<@(?:\!|)(\d+)\>")
 
 
 def get_es_gym_by_id(ctx, argument):
@@ -70,7 +70,7 @@ class Gym(commands.Converter):
             return response[0]
         except (commands.CommandError, commands.BadArgument):
             raise
-        except Exception as e:
+        except Exception:
             logger.exception("Exception in Gym converter")
             await ctx.send(_("Error in Gym converter. Check your console or logs for details"))
             raise
@@ -86,7 +86,7 @@ class GymWithSQL(Gym):
             return (es_gym, sql_gym)
         except (commands.CommandError, commands.BadArgument):
             raise
-        except Exception as e:
+        except Exception:
             logger.exception("Exception in GymWithSQL converter")
             await ctx.send(
                 _("Error in GymWithSQL converter. Check your console or logs for details")
@@ -155,7 +155,7 @@ class Time(commands.Converter):
             return start_dt
         except (commands.CommandError, commands.BadArgument):
             raise
-        except Exception as e:
+        except Exception:
             logger.exception("Exception in Time converter")
             await ctx.send(_("Error in Time converter. Check your console or logs for details"))
             raise
@@ -177,7 +177,7 @@ class Pokemon(commands.Converter):
             return response[0]
         except (commands.CommandError, commands.BadArgument):
             raise
-        except Exception as e:
+        except Exception:
             logger.exception("Exception in Pokemon converter")
             await ctx.send(_("Error in Pokemon converter. Check your console or logs for details"))
             raise
@@ -195,7 +195,7 @@ class PokemonWithSQL(Pokemon):
             return (es_pokemon, sql_pokemon)
         except (commands.CommandError, commands.BadArgument):
             raise
-        except Exception as e:
+        except Exception:
             logger.exception("Exception in PokemonWithSQL converter")
             await ctx.send(
                 _("Error in PokemonWithSQL converter. Check your console or logs for details")
@@ -219,7 +219,7 @@ class Raid(commands.Converter):
             return raid
         except (commands.CommandError, commands.BadArgument):
             raise
-        except Exception as e:
+        except Exception:
             logger.exception("Exception in Raid converter")
             await ctx.send(_("Error in Raid converter. Check your console or logs for details"))
             raise
@@ -252,7 +252,7 @@ class MembersWithExtra(commands.Converter):
             return members
         except (commands.CommandError, commands.BadArgument):
             raise
-        except Exception as e:
+        except Exception:
             logger.exception("Exception in MembersWithExtra")
             await ctx.send(
                 _("Error in MembersWithExtrar converter. Check your console or logs for details")

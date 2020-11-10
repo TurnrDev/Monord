@@ -23,7 +23,7 @@ async def raid_timers(cog):
             # Find the soonest raid that hasn't hatched or despawned.
             raids = (
                 cog.session.query(models.Raid)
-                .filter(or_(models.Raid.despawned == False, models.Raid.hatched == False))
+                .filter(or_(models.Raid.despawned is False, models.Raid.hatched is False))
                 .order_by("despawn_time")
             )
 
@@ -45,11 +45,11 @@ async def raid_timers(cog):
 
             # If it's hatched use the despawn time.
             t = raid.despawn_time
-            if raid.hatched == False:
+            if raid.hatched is False:
                 t = t - utils.DESPAWN_TIME
 
             # Wait until hatch / despawn, or until a raid time is changed
-            while cog.raid_time_stale == False and datetime.datetime.utcnow() < t:
+            while cog.raid_time_stale is False and datetime.datetime.utcnow() < t:
                 await asyncio.sleep(1)
 
             # If a raids time was changed, restart the loop to check for new times
@@ -65,7 +65,7 @@ async def raid_timers(cog):
                 await utils.mark_raid_despawned(cog, raid)
             cog.session.add(raid)
             cog.session.commit()
-        except Exception as e:
+        except Exception:
             logger.exception("Error in raid_timers")
             await asyncio.sleep(5)
 
@@ -76,7 +76,7 @@ async def embed_timers(cog):
             # Find the embed that needs deleting.
             embed = (
                 cog.session.query(models.Embed)
-                .filter(models.Embed.delete_at != None)
+                .filter(models.Embed.delete_at is not None)
                 .order_by("delete_at")
                 .first()
             )
@@ -84,7 +84,7 @@ async def embed_timers(cog):
             if embed is None:
                 return
             # Wait until hatch / despawn, or until a raid time is changed
-            while cog.embed_time_stale == False and datetime.datetime.utcnow() < embed.delete_at:
+            while cog.embed_time_stale is False and datetime.datetime.utcnow() < embed.delete_at:
                 await asyncio.sleep(1)
 
             # If an embed time was changed, restart the loop to check for new times
@@ -96,12 +96,12 @@ async def embed_timers(cog):
                 channel = cog.bot.get_channel(embed.channel_id)
                 message = await channel.get_message(embed.message_id)
                 await message.delete()
-            except discord.errors.NotFound as e:
+            except discord.errors.NotFound:
                 logging.exception("Delete failed")
                 pass
             cog.session.query(models.Embed).filter_by(message_id=embed.message_id).delete()
 
-        except Exception as e:
+        except Exception:
             logger.exception("Error in embed_timers")
             await asyncio.sleep(5)
 

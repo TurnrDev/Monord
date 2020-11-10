@@ -8,7 +8,6 @@ from . import stats
 from . import webhook
 import asyncio
 from discord.ext import commands
-from elasticsearch import Elasticsearch
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy.orm.exc import NoResultFound
@@ -20,7 +19,6 @@ import discord
 import json
 import datetime
 import pytz
-import re
 import gettext
 from os import environ
 
@@ -167,7 +165,6 @@ class Monord(commands.Cog):
         <gym> - The title or ID of the gym
         """
         sql_gym = self.session.query(models.Gym).filter_by(id=gym.meta["id"])
-        title = sql_gym.first().title
         sql_gym.delete()
         es_models.Gym.get(id=gym.meta["id"]).delete()
         await ctx.send(_("Gym removed"))
@@ -377,7 +374,6 @@ class Monord(commands.Cog):
         <time> - Can be minutes (in the future), or a HH:MM time
         <raid> Either the title of a gym, or a raid ID
         """
-        despawn_time = pytz.utc.localize(raid.despawn_time)
         raid.despawn_time = time
         self.session.add(raid)
         await utils.update_raid(self, raid)
@@ -386,7 +382,6 @@ class Monord(commands.Cog):
 
     @raid.command(case_insensitive=True)
     async def hatch(self, ctx, time: converters.Time, *, raid: converters.Raid):
-        despawn_time = pytz.utc.localize(raid.despawn_time)
         raid.despawn_time = time + datetime.timedelta(minutes=utils.DESPAWN_TIME)
         self.session.add(raid)
         await utils.update_raid(self, raid)
@@ -411,7 +406,7 @@ class Monord(commands.Cog):
 
         await ctx.send(possibilities)
 
-    @raid.command(case_insensitive=True, alias="pok??mon")
+    @raid.command(case_insensitive=True, alias="pokémon")
     async def pokemon(self, ctx, pokemon: converters.PokemonWithSQL, *, raid: converters.Raid):
         """
         Set the pokemon on a raid.
@@ -451,11 +446,11 @@ class Monord(commands.Cog):
         if isinstance(ctx.message.channel, discord.abc.PrivateChannel):
             await ctx.send(_("This command is not available in DMs."))
             return
-        if key == None:
+        if key is None:
             await config.list_settings(ctx)
             return
 
-        if value == None:
+        if value is None:
             if key in config.SETTINGS:
                 cfg = config.get(self.session, key, channel, False, not is_channel, False)
                 await ctx.send(_("{} is set to {}").format(key, cfg))
@@ -490,7 +485,7 @@ class Monord(commands.Cog):
         <key> the key to set, or nothing to see a list of keys
         <value> the value to set, or nothing to see the value of <key>
         """
-        if channel == None:
+        if channel is None:
             channel = ctx.message.channel
         await self.set_config(ctx, True, key, value, channel)
 
@@ -512,7 +507,7 @@ class Monord(commands.Cog):
         """
         await ctx.send_help()
 
-    @subscribe.group(name="pokemon", case_insensitive=True, alias="pok??mon")
+    @subscribe.group(name="pokemon", case_insensitive=True, alias="pokémon")
     async def pokemon_subscribe(self, ctx, *, pokemon: converters.Pokemon):
         """
         Subscribe to notifications for a pokemon
